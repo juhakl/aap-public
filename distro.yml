@@ -1,3 +1,5 @@
+---
+
 - hosts: all
   gather_facts: yes
   become: false
@@ -8,8 +10,9 @@
     - "{{ ansible_distribution }}"
     - "{{ ansible_distribution_version }}"
     
-  - name: use command to pull version
-    command: '/usr/bin/rpm -qa custom-rpm --queryformat %{VERSION}'
+  - name: Get version of RPM
+    shell: yum list installed custom-rpm | grep custom-rpm | awk '{print $2}' | cut -d'-' -f1
     register: version
-    ignore_warnings: True
     changed_when: False
+    args:
+      warn: no
