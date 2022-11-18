@@ -16,4 +16,6 @@
     changed_when: False
     args:
       warn: no
-    debug: msg="{{ version }}"
+      
+  - debug:
+    var: version
