@@ -10,12 +10,9 @@
     - "{{ ansible_distribution }}"
     - "{{ ansible_distribution_version }}"
     
-  - name: Get version of RPM
-    shell:  yum list installed openssl | grep openssl | awk '{print $2}' | cut -d'-' -f1
-    register: version
-    changed_when: False
-    args:
-      warn: no
-      
-  - debug:
-    var: version
+  - name: get the rpm or apt package facts
+    package_facts:
+      manager: "auto"
+
+  - name: show openssl version
+    debug: var=ansible_facts.packages.openssl[0].version
