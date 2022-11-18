@@ -11,8 +11,9 @@
     - "{{ ansible_distribution_version }}"
     
   - name: Get version of RPM
-    shell: yum list installed custom-rpm | grep custom-rpm | awk '{print $2}' | cut -d'-' -f1
+    shell:  yum list installed openssl | grep openssl | awk '{print $2}' | cut -d'-' -f1
     register: version
     changed_when: False
     args:
       warn: no
+    debug: msg="{{ version }}"
